@@ -1,0 +1,34 @@
+/* .lexicalComposer {
+} */
+
+.contentEditable {
+  height: 300px;
+  padding: 0 8px;
+  border: 1px solid black;
+}
+
+.placeholder {
+  position: absolute;
+  top: 56px;
+  padding-left: 8px;
+}
+
+.tools-editor-h1 {
+  color: red;
+  font-weight: bold;
+}
+
+.tools-editor-h2 {
+  color: blue;
+  font-style: italic;
+}
+
+.tools-editor-bold {
+  color: purple;
+}
+
+.tools-editor-banner {
+  background-color: burlywood;
+  margin: 8px 0;
+  padding: 0 4px;
+}
