@@ -20,41 +20,53 @@ import { ListNode, ListItemNode } from "@lexical/list";
 
 import ToolbarPlugin from "../EditorToolbar/EditorToolbar";
 import { BannerNode, BannerPlugin } from "./Plugins/Banner/BannerPlugin";
+import TreeViewPlugin from "./Plugins/TreeView/TreeViewPlugin";
+import ListMaxIndentLevelPlugin from "./Plugins/ListMaxIndentLevel/ListMaxIndentLevelPlugin";
+import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
+import { $createHeadingNode } from "@lexical/rich-text";
+// import {
+//   CustomOrderedListItemNode,
+//   CustomOrderedListNode,
+//   CustomOrderedListPlugin,
+// } from "./Plugins/CustomOrderedList/CustomOrderedListPlugin";
+import {
+  CustomListItemNode,
+  ListPartHeadingNode,
+} from "./Plugins/ListPartHeading/ListPartHeadingPlugin";
 
 const theme = {
   heading: {
     h1: `tools-editor-h1`,
     h2: `tools-editor-h2`,
-    h3: `tools-editor-h3`,
   },
   list: {
     ul: `tools-editor-ul`,
     ol: `tools-editor-ol`,
   },
-  text: {
-    bold: `tools-editor-bold`,
-    italic: `tools-editor-italic`,
+  listItem: {
+    ul: `tools-editor-ul-li`,
+    ol: `tools-editor-ol-li`,
+    custom: `tools-editor-custom-li`,
   },
-  banner: `tools-editor-banner`,
 };
 
 function prepopulatedRichText() {
   const root = $getRoot();
   if (root.getFirstChild() === null) {
-    const paragraph = $createParagraphNode();
-    paragraph.append(
-      $createTextNode("The playground is a demo environment built with "),
-      $createTextNode("@lexical/react").toggleFormat("code"),
-      $createTextNode("."),
-      $createTextNode(" Try typing in "),
-      $createTextNode("some text").toggleFormat("bold"),
-      $createTextNode(" with "),
-      $createTextNode("different").toggleFormat("italic"),
-      $createTextNode(" formats.")
-    );
-    root.append(paragraph);
+    const heading = $createHeadingNode("h1");
+    heading.append($createTextNode("The playground is a demo environment "));
+    root.append(heading);
+    const subheading = $createHeadingNode("h2");
+    subheading.append($createTextNode("for the Lexical Editor."));
+    root.append(subheading);
   }
 }
+
+// -- example of how to read the editor state
+// editorState.read(() => {
+//   const htmlString = $generateHtmlFromNodes(editor, null);
+//   console.log("htmlString: ", htmlString);
+// });
 
 // Catch any errors that occur during Lexical updates and log them
 // or throw them as needed. If you don't throw them, Lexical will
@@ -96,7 +108,7 @@ function Editor() {
     namespace: "MyEditor",
     theme,
     onError,
-    nodes: [HeadingNode, ListNode, ListItemNode, BannerNode],
+    nodes: [HeadingNode, ListNode, ListItemNode, ListPartHeadingNode],
     editorState: prepopulatedRichText,
   };
 
@@ -110,7 +122,11 @@ function Editor() {
         ErrorBoundary={LexicalErrorBoundary}
       />
       <ListPlugin />
-      <BannerPlugin />
+      {/* <BannerPlugin /> */}
+      <TreeViewPlugin />
+      <ListMaxIndentLevelPlugin maxDepth={3} />
+      {/* <TabIndentationPlugin />  */}
+      {/* <CustomOrderedListPlugin /> */}
 
       {/* // HistoryPlugin is a plugin that provides undo/redo functionality */}
       <HistoryPlugin />

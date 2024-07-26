@@ -14,14 +14,96 @@
 }
 
 .tools-editor-h1 {
-  color: red;
+  text-align: center;
+  font-size: 10pt;
+  font-family: Arial;
   font-weight: bold;
 }
 
 .tools-editor-h2 {
-  color: blue;
-  font-style: italic;
+  text-align: center;
+  font-size: 10pt;
+  font-family: Arial;
+  font-weight: bold;
 }
+
+.tools-editor-ul {
+  background-color: red;
+}
+
+/* [data-marker]:before {
+  content: attr(data-marker);
+  margin-right: 0.5em;
+} */
+
+.tools-editor-custom-li[data-marker]:before {
+  content: attr(data-marker);
+  margin-right: 0.5em;
+}
+
+/* matching style from docs */
+
+.tools-editor-title {
+  text-align: center;
+  font-size: 10pt;
+  font-family: Arial;
+  font-weight: bold;
+}
+
+.tools-editor-subtitle {
+  text-align: center;
+  font-size: 10pt;
+  font-family: Arial;
+  font-weight: bold;
+}
+
+.tools-editor-partheading {
+  text-align: justify;
+  font-size: 10pt;
+  font-family: Arial;
+  text-transform: uppercase;
+}
+
+.tools-editor-sectionheading {
+  text-align: justify;
+  font-size: 10pt;
+  font-family: Arial;
+  text-transform: uppercase;
+}
+
+.tools-editor-subsection {
+  text-align: left;
+  font-size: 10pt;
+  font-family: Arial;
+}
+
+.tools-editor-subsectionlist {
+  text-align: left;
+  font-size: 10pt;
+  font-family: Arial;
+}
+
+.tools-editor-subsectionlistdetails {
+  text-align: left;
+  font-size: 10pt;
+  font-family: Arial;
+}
+
+.tools-editor-subsubsectionlistdetails {
+  text-align: left;
+  font-size: 10pt;
+  font-family: Arial;
+}
+
+.tools-editor-endofsection {
+  text-align: center;
+  font-size: 10pt;
+  font-family: Arial;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* end */
 
 .tools-editor-bold {
   color: purple;
