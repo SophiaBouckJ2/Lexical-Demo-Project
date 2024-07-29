@@ -27,17 +27,32 @@
   font-weight: bold;
 }
 
-.tools-editor-ul {
-  background-color: red;
+.tools-editor-endOfSection {
+  text-align: center;
+  font-size: 10pt;
+  font-family: Arial;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
-/* [data-marker]:before {
-  content: attr(data-marker);
-  margin-right: 0.5em;
-} */
+.tools-editor-ol {
+  counter-reset: section;
+  text-align: justify;
+  font-size: 10pt;
+  font-family: Arial;
+  text-transform: uppercase;
+}
 
-.tools-editor-custom-li[data-marker]:before {
-  content: attr(data-marker);
+.tools-editor-ol li {
+  counter-increment: section;
+}
+
+.tools-editor-ol li::marker {
+  content: "";
+}
+
+.tools-editor-ol li::before {
+  content: "PART " counter(section) " - ";
   margin-right: 0.5em;
 }
 

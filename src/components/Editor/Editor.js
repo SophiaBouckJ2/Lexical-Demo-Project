@@ -16,7 +16,7 @@ import {
 import { HeadingNode } from "@lexical/rich-text";
 
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
-import { ListNode, ListItemNode } from "@lexical/list";
+import { ListNode, ListItemNode, $createListNode } from "@lexical/list";
 
 import ToolbarPlugin from "../EditorToolbar/EditorToolbar";
 import { BannerNode, BannerPlugin } from "./Plugins/Banner/BannerPlugin";
@@ -24,15 +24,6 @@ import TreeViewPlugin from "./Plugins/TreeView/TreeViewPlugin";
 import ListMaxIndentLevelPlugin from "./Plugins/ListMaxIndentLevel/ListMaxIndentLevelPlugin";
 import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
 import { $createHeadingNode } from "@lexical/rich-text";
-// import {
-//   CustomOrderedListItemNode,
-//   CustomOrderedListNode,
-//   CustomOrderedListPlugin,
-// } from "./Plugins/CustomOrderedList/CustomOrderedListPlugin";
-import {
-  CustomListItemNode,
-  ListPartHeadingNode,
-} from "./Plugins/ListPartHeading/ListPartHeadingPlugin";
 
 const theme = {
   heading: {
@@ -43,22 +34,24 @@ const theme = {
     ul: `tools-editor-ul`,
     ol: `tools-editor-ol`,
   },
-  listItem: {
-    ul: `tools-editor-ul-li`,
-    ol: `tools-editor-ol-li`,
-    custom: `tools-editor-custom-li`,
-  },
+  paragraph: `tools-editor-endOfSection`,
 };
 
 function prepopulatedRichText() {
   const root = $getRoot();
   if (root.getFirstChild() === null) {
     const heading = $createHeadingNode("h1");
-    heading.append($createTextNode("The playground is a demo environment "));
+    heading.append($createTextNode("This Is Heading One "));
     root.append(heading);
     const subheading = $createHeadingNode("h2");
-    subheading.append($createTextNode("for the Lexical Editor."));
+    subheading.append($createTextNode("And Here Is Heading Two."));
     root.append(subheading);
+    const list = $createListNode("ol");
+    list.append($createTextNode("This is a list item."));
+    root.append(list);
+    const endOfSection = $createParagraphNode();
+    endOfSection.append($createTextNode("This is the end of the section."));
+    root.append(endOfSection);
   }
 }
 
@@ -108,7 +101,7 @@ function Editor() {
     namespace: "MyEditor",
     theme,
     onError,
-    nodes: [HeadingNode, ListNode, ListItemNode, ListPartHeadingNode],
+    nodes: [HeadingNode, ListNode, ListItemNode],
     editorState: prepopulatedRichText,
   };
 
@@ -122,11 +115,9 @@ function Editor() {
         ErrorBoundary={LexicalErrorBoundary}
       />
       <ListPlugin />
-      {/* <BannerPlugin /> */}
       <TreeViewPlugin />
-      <ListMaxIndentLevelPlugin maxDepth={3} />
+      {/* <ListMaxIndentLevelPlugin maxDepth={3} /> */}
       {/* <TabIndentationPlugin />  */}
-      {/* <CustomOrderedListPlugin /> */}
 
       {/* // HistoryPlugin is a plugin that provides undo/redo functionality */}
       <HistoryPlugin />
