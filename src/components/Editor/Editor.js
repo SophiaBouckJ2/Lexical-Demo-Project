@@ -44,6 +44,20 @@ import {
   SubsectionNode,
   SubsectionPlugin,
 } from "./Plugins/Lists/Subsection";
+import {
+  $createSubsectionListItemNode,
+  $createSubsectionListNode,
+  SubsectionListItemNode,
+  SubsectionListNode,
+  SubsectionListPlugin,
+} from "./Plugins/Lists/SubsectionList";
+import {
+  $createSubsectionListDetailsItemNode,
+  $createSubsectionListDetailsNode,
+  SubsectionListDetailsItemNode,
+  SubsectionListDetailsNode,
+  SubsectionListDetailsPlugin,
+} from "./Plugins/Lists/SubsectionListDetails";
 
 const theme = {
   heading: {
@@ -61,6 +75,12 @@ const theme = {
   sectionHeadingItem: `tools-editor-sectionHeadingItem`,
   subsection: `tools-editor-subsection`,
   subsectionItem: `tools-editor-subsectionItem`,
+  subsectionList: `tools-editor-subsectionList`,
+  subsectionListItem: `tools-editor-subsectionListItem`,
+  subsectionListDetails: `tools-editor-subsectionListDetails`,
+  subsectionListDetailsItem: `tools-editor-subsectionListDetailsItem`,
+  subSubsectionListDetails: `tools-editor-subSubsectionListDetails`,
+  subSubsectionListDetailsItem: `tools-editor-subSubsectionListDetailsItem`,
 };
 
 function prepopulatedRichText() {
@@ -101,6 +121,34 @@ function prepopulatedRichText() {
     subsectionItem.append(subsectionItemText);
     subsection.append(subsectionItem);
     root.append(subsection);
+    // subsection list
+    const subsectionList = $createSubsectionListNode();
+    const subsectionListItem = $createSubsectionListItemNode();
+    const subsectionListItemText = $createTextNode(
+      "This is a subsection list."
+    );
+    subsectionListItem.append(subsectionListItemText);
+    subsectionList.append(subsectionListItem);
+    root.append(subsectionList);
+    // subsection list details
+    const subsectionListDetails = $createSubsectionListDetailsNode();
+    const subsectionListDetailsItem = $createSubsectionListDetailsItemNode();
+    const subsectionListDetailsItemText = $createTextNode(
+      "This is a subsection list details."
+    );
+    subsectionListDetailsItem.append(subsectionListDetailsItemText);
+    subsectionListDetails.append(subsectionListDetailsItem);
+    root.append(subsectionListDetails);
+    // sub subsection list details
+    // const subSubsectionListDetails = $createSubSubsectionListDetailsNode();
+    // const subSubsectionListDetailsItem =
+    //   $createSubSubsectionListDetailsItemNode();
+    // const subSubsectionListDetailsItemText = $createTextNode(
+    //   "This is a sub subsection list details."
+    // );
+    // subSubsectionListDetailsItem.append(subSubsectionListDetailsItemText);
+    // subSubsectionListDetails.append(subSubsectionListDetailsItem);
+    // root.append(subSubsectionListDetails);
     // end of section
     const endOfSection = $createHeadingNode("h5");
     endOfSection.append($createTextNode("This is the end of the section."));
@@ -164,6 +212,10 @@ function Editor() {
       SectionHeadingItemNode,
       SubsectionNode,
       SubsectionItemNode,
+      SubsectionListNode,
+      SubsectionListItemNode,
+      SubsectionListDetailsNode,
+      SubsectionListDetailsItemNode,
     ],
     editorState: prepopulatedRichText,
   };
@@ -182,6 +234,8 @@ function Editor() {
       <PartHeadingPlugin />
       <SectionHeadingPlugin />
       <SubsectionPlugin />
+      <SubsectionListPlugin />
+      <SubsectionListDetailsPlugin />
 
       <TreeViewPlugin />
 

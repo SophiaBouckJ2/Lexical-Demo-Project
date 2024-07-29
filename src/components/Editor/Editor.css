@@ -85,13 +85,35 @@
   margin-right: 0.5em;
 }
 
-/* matching style from docs */
+/* subsection list */
 
-.tools-editor-subsectionlist {
+.tools-editor-subsectionList {
   text-align: left;
   font-size: 10pt;
   font-family: Arial;
+  margin-right: 0.5em;
 }
+
+/* subsection list details */
+
+.tools-editor-subsectionListDetails {
+  text-align: left;
+  font-size: 10pt;
+  font-family: Arial;
+  counter-reset: section;
+}
+
+.tools-editor-subsectionListDetails li {
+  list-style-type: none; /* Remove default list style */
+  counter-increment: section;
+}
+
+.tools-editor-subsectionListDetails li::before {
+  content: counter(section, lower-alpha) ".";
+  margin-right: 0.5em;
+}
+
+/* matching style from docs */
 
 .tools-editor-subsectionlistdetails {
   text-align: left;

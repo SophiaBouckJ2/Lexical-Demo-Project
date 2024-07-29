@@ -1,6 +1,6 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $createHeadingNode } from "@lexical/rich-text";
-import { $createTextNode, $getSelection, $isRangeSelection } from "lexical";
+import { $getSelection, $isRangeSelection } from "lexical";
 import { $setBlocksType } from "@lexical/selection";
 import {
   INSERT_ORDERED_LIST_COMMAND,
@@ -14,7 +14,9 @@ import Box from "@mui/material/Box";
 import { INSERT_PARTHEADING_COMMAND } from "../Editor/Plugins/Lists/PartHeading";
 import { INSERT_SECTIONHEADING_COMMAND } from "../Editor/Plugins/Lists/SectionHeading";
 import { INSERT_SUBSECTION_COMMAND } from "../Editor/Plugins/Lists/Subsection";
-// import { INSERT_PARTHEADING_COMMAND } from "../Editor/Plugins/Lists/PartHeading";
+import { INSERT_SUBSECTIONLIST_COMMAND } from "../Editor/Plugins/Lists/SubsectionList";
+import { INSERT_SUBSECTIONLISTDETAILS_COMMAND } from "../Editor/Plugins/Lists/SubsectionListDetails";
+import { INSERT_SUBSUBSECTIONLISTDETAILS_COMMAND } from "../Editor/Plugins/Lists/SubSubsectionListDetails";
 
 const TextTypes = ["paragraph"];
 const HeadingTypes = ["h1", "h2", "h5"];
@@ -164,6 +166,63 @@ function SubsectionToolbarPlugin() {
   );
 }
 
+function SubsectionListToolbarPlugin() {
+  const [editor] = useLexicalComposerContext();
+  const onClick = () => {
+    editor.dispatchCommand(INSERT_SUBSECTIONLIST_COMMAND, undefined);
+  };
+  return (
+    <Grid item xs={0} key={"subsectionlist"}>
+      <Button
+        variant={"outlined"}
+        onClick={() => {
+          onClick();
+        }}
+      >
+        Subsection List
+      </Button>
+    </Grid>
+  );
+}
+
+function SubsectionListDetailsToolbarPlugin() {
+  const [editor] = useLexicalComposerContext();
+  const onClick = () => {
+    editor.dispatchCommand(INSERT_SUBSECTIONLISTDETAILS_COMMAND, undefined);
+  };
+  return (
+    <Grid item xs={0} key={"subsectionlistdetails"}>
+      <Button
+        variant={"outlined"}
+        onClick={() => {
+          onClick();
+        }}
+      >
+        Subsection List Details
+      </Button>
+    </Grid>
+  );
+}
+
+function SubSubsectionListDetailsToolbarPlugin() {
+  const [editor] = useLexicalComposerContext();
+  const onClick = () => {
+    editor.dispatchCommand(INSERT_SUBSUBSECTIONLISTDETAILS_COMMAND, undefined);
+  };
+  return (
+    <Grid item xs={0} key={"subsubsectionlistdetails"}>
+      <Button
+        variant={"outlined"}
+        onClick={() => {
+          onClick();
+        }}
+      >
+        Sub Subsection List Details
+      </Button>
+    </Grid>
+  );
+}
+
 function ToolbarPlugin(props) {
   const [editor] = useLexicalComposerContext();
   return (
@@ -176,6 +235,9 @@ function ToolbarPlugin(props) {
           <PartHeadingToolbarPlugin />
           <SectionHeadingToolbarPlugin />
           <SubsectionToolbarPlugin />
+          <SubsectionListToolbarPlugin />
+          <SubsectionListDetailsToolbarPlugin />
+          <SubSubsectionListDetailsToolbarPlugin />
         </Grid>
       </Box>
     </div>
