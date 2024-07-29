@@ -38,10 +38,7 @@
 
 .tools-editor-partHeading li {
   counter-increment: section;
-}
-
-.tools-editor-partHeading li::marker {
-  content: "";
+  list-style-type: none;
 }
 
 .tools-editor-partHeading li::before {
@@ -49,66 +46,46 @@
   margin-right: 0.5em;
 }
 
-/**/
-
-.tools-editor-ol {
-  counter-reset: section;
-  text-align: justify;
-  font-size: 10pt;
-  font-family: Arial;
-  text-transform: uppercase;
-}
-
-.tools-editor-ol li {
-  counter-increment: section;
-}
-
-.tools-editor-ol li::marker {
-  content: "";
-}
-
-.tools-editor-ol li::before {
-  content: "PART " counter(section) " - ";
-  margin-right: 0.5em;
-}
-
 /* section heading */
 
-.tools-editor-section-heading {
-  counter-reset: counter;
+.tools-editor-sectionHeading {
   text-align: justify;
   font-size: 10pt;
   font-family: Arial;
   text-transform: uppercase;
+  counter-reset: section;
 }
 
-.tools-editor-section-heading li {
-  counter-increment: counter;
+.tools-editor-sectionHeading li {
+  counter-increment: section;
+  list-style-type: none;
 }
 
-.tools-editor-section-heading li::marker {
-  content: "";
-}
-
-.tools-editor-section-heading li::before {
-  content: "1." counter(counter);
+.tools-editor-sectionHeading li::before {
+  content: "1." counter(section);
   margin-right: 0.5em;
 }
 
-/* matching style from docs */
-
-.tools-editor-sectionheading {
-  text-align: justify;
-  font-size: 10pt;
-  font-family: Arial;
-  text-transform: uppercase;
-}
+/* subsection heading */
 
 .tools-editor-subsection {
   text-align: left;
   font-size: 10pt;
   font-family: Arial;
+  counter-reset: section;
 }
+
+.tools-editor-subsection li {
+  counter-increment: section;
+  list-style-type: none;
+}
+
+.tools-editor-subsection li::before {
+  content: counter(section, upper-alpha) ".";
+  margin-right: 0.5em;
+}
+
+/* matching style from docs */
 
 .tools-editor-subsectionlist {
   text-align: left;

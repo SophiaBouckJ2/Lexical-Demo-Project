@@ -16,10 +16,9 @@ import {
 import { HeadingNode } from "@lexical/rich-text";
 
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
-import { ListNode, ListItemNode, $createListNode } from "@lexical/list";
+import { ListNode, ListItemNode } from "@lexical/list";
 
 import ToolbarPlugin from "../EditorToolbar/EditorToolbar";
-import { BannerNode, BannerPlugin } from "./Plugins/Banner/BannerPlugin";
 import TreeViewPlugin from "./Plugins/TreeView/TreeViewPlugin";
 import ListMaxIndentLevelPlugin from "./Plugins/ListMaxIndentLevel/ListMaxIndentLevelPlugin";
 import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
@@ -31,6 +30,20 @@ import {
   PartHeadingNode,
   PartHeadingPlugin,
 } from "./Plugins/Lists/PartHeading";
+import {
+  $createSectionHeadingItemNode,
+  $createSectionHeadingNode,
+  SectionHeadingItemNode,
+  SectionHeadingNode,
+  SectionHeadingPlugin,
+} from "./Plugins/Lists/SectionHeading";
+import {
+  $createSubsectionItemNode,
+  $createSubsectionNode,
+  SubsectionItemNode,
+  SubsectionNode,
+  SubsectionPlugin,
+} from "./Plugins/Lists/Subsection";
 
 const theme = {
   heading: {
@@ -44,6 +57,10 @@ const theme = {
   },
   partHeading: `tools-editor-partHeading`,
   partHeadingItem: `tools-editor-partHeadingItem`,
+  sectionHeading: `tools-editor-sectionHeading`,
+  sectionHeadingItem: `tools-editor-sectionHeadingItem`,
+  subsection: `tools-editor-subsection`,
+  subsectionItem: `tools-editor-subsectionItem`,
 };
 
 function prepopulatedRichText() {
@@ -60,10 +77,30 @@ function prepopulatedRichText() {
     // part heading
     const partHeading = $createPartHeadingNode();
     const partHeadingItem = $createPartHeadingItemNode();
-    const partHeadingItemText = $createTextNode("This is a list item.");
+    const partHeadingItemText = $createTextNode(
+      "This is a part heading list item."
+    );
     partHeadingItem.append(partHeadingItemText);
     partHeading.append(partHeadingItem);
     root.append(partHeading);
+    // section heading
+    const sectionHeading = $createSectionHeadingNode();
+    const sectionHeadingItem = $createSectionHeadingItemNode();
+    const sectionHeadingItemText = $createTextNode(
+      "This is a section heading list item."
+    );
+    sectionHeadingItem.append(sectionHeadingItemText);
+    sectionHeading.append(sectionHeadingItem);
+    root.append(sectionHeading);
+    // subsection
+    const subsection = $createSubsectionNode();
+    const subsectionItem = $createSubsectionItemNode();
+    const subsectionItemText = $createTextNode(
+      "This is a subsection list item."
+    );
+    subsectionItem.append(subsectionItemText);
+    subsection.append(subsectionItem);
+    root.append(subsection);
     // end of section
     const endOfSection = $createHeadingNode("h5");
     endOfSection.append($createTextNode("This is the end of the section."));
@@ -123,6 +160,10 @@ function Editor() {
       ListItemNode,
       PartHeadingNode,
       PartHeadingItemNode,
+      SectionHeadingNode,
+      SectionHeadingItemNode,
+      SubsectionNode,
+      SubsectionItemNode,
     ],
     editorState: prepopulatedRichText,
   };
@@ -137,9 +178,14 @@ function Editor() {
         ErrorBoundary={LexicalErrorBoundary}
       />
       <ListPlugin />
+
       <PartHeadingPlugin />
+      <SectionHeadingPlugin />
+      <SubsectionPlugin />
+
       <TreeViewPlugin />
-      {/* <ListMaxIndentLevelPlugin maxDepth={3} /> */}
+
+      <ListMaxIndentLevelPlugin maxDepth={3} />
       <TabIndentationPlugin />
 
       {/* // HistoryPlugin is a plugin that provides undo/redo functionality */}

@@ -8,22 +8,22 @@ import {
 } from "lexical";
 import { $setBlocksType } from "@lexical/selection";
 
-export class PartHeadingNode extends ElementNode {
+export class SectionHeadingNode extends ElementNode {
   /// element nodes have children so we use it here
   static getType() {
-    return "partHeading";
+    return "sectionHeading";
   }
   constructor(key) {
     super(key);
   }
 
   static clone(node) {
-    return new PartHeadingNode(node.__key);
+    return new SectionHeadingNode(node.__key);
   }
 
   createDOM(config) {
     const element = document.createElement("ol");
-    element.className = config.theme.partHeading || "partHeading";
+    element.className = config.theme.sectionHeading || "sectionHeading";
     return element;
   }
 
@@ -34,7 +34,7 @@ export class PartHeadingNode extends ElementNode {
   // this triggers on "Enter" key press
   insertNewAfter(selection, restoreSelection) {
     console.log("insertNewAfter");
-    const newBlock = new PartHeadingItemNode();
+    const newBlock = new SectionHeadingItemNode();
     const direction = this.getDirection();
     newBlock.setDirection(direction);
     this.append(newBlock);
@@ -44,7 +44,7 @@ export class PartHeadingNode extends ElementNode {
   //
   collapseAtStart() {
     console.log("collapseAtStart");
-    const listNode = new PartHeadingNode();
+    const listNode = new SectionHeadingNode();
     const children = this.getChildren();
     children.forEach((child) => {
       listNode.appendChild(child);
@@ -54,30 +54,32 @@ export class PartHeadingNode extends ElementNode {
   }
 }
 
-export function $createPartHeadingNode() {
-  return new PartHeadingNode();
+export function $createSectionHeadingNode() {
+  return new SectionHeadingNode();
 }
 
-export function $isPartHeadingNode(node) {
-  return node instanceof PartHeadingNode;
+export function $isSectionHeadingNode(node) {
+  return node instanceof SectionHeadingNode;
 }
 
-export const INSERT_PARTHEADING_COMMAND = createCommand("insertPartHeading");
+export const INSERT_SECTIONHEADING_COMMAND = createCommand(
+  "insertSectionHeading"
+);
 
-export function PartHeadingPlugin() {
+export function SectionHeadingPlugin() {
   const [editor] = useLexicalComposerContext();
-  if (!editor.hasNodes([PartHeadingNode])) {
-    throw new Error("Part Heading Node must be registered in the editor.");
+  if (!editor.hasNodes([SectionHeadingNode])) {
+    throw new Error("Section Heading Node must be registered in the editor.");
   }
   editor.registerCommand(
-    INSERT_PARTHEADING_COMMAND,
+    INSERT_SECTIONHEADING_COMMAND,
     () => {
       const selection = $getSelection();
       if ($isRangeSelection(selection)) {
-        const newPartHeadingNode = $createPartHeadingNode();
-        const newPartHeadingItemNode = $createPartHeadingItemNode();
-        newPartHeadingNode.append(newPartHeadingItemNode);
-        $setBlocksType(selection, () => newPartHeadingNode);
+        const newSectionHeadingNode = $createSectionHeadingNode();
+        const newSectionHeadingItemNode = $createSectionHeadingItemNode();
+        newSectionHeadingNode.append(newSectionHeadingItemNode);
+        $setBlocksType(selection, () => newSectionHeadingNode);
       }
       return true;
     },
@@ -86,22 +88,22 @@ export function PartHeadingPlugin() {
   return null;
 }
 
-export class PartHeadingItemNode extends ElementNode {
+export class SectionHeadingItemNode extends ElementNode {
   /// element nodes have children so we use it here
   static getType() {
-    return "partHeadingItem";
+    return "sectionHeadingItem";
   }
   constructor(key) {
     super(key);
   }
 
   static clone(node) {
-    return new PartHeadingItemNode(node.__key);
+    return new SectionHeadingItemNode(node.__key);
   }
 
   createDOM(config) {
     const element = document.createElement("li");
-    element.className = config.theme.partHeadingItem || "partHeadingItem";
+    element.className = config.theme.sectionHeadingItem || "sectionHeadingItem";
     return element;
   }
 
@@ -112,7 +114,7 @@ export class PartHeadingItemNode extends ElementNode {
   // this triggers on "Enter" key press
   insertNewAfter(selection, restoreSelection) {
     console.log("insertNewAfter");
-    const newBlock = new PartHeadingItemNode();
+    const newBlock = new SectionHeadingItemNode();
     const direction = this.getDirection();
     newBlock.setDirection(direction);
     this.insertAfter(newBlock, restoreSelection);
@@ -122,7 +124,7 @@ export class PartHeadingItemNode extends ElementNode {
   //
   collapseAtStart() {
     console.log("collapseAtStart");
-    const listNode = new PartHeadingItemNode();
+    const listNode = new SectionHeadingItemNode();
     const children = this.getChildren();
     children.forEach((child) => {
       listNode.appendChild(child);
@@ -132,14 +134,14 @@ export class PartHeadingItemNode extends ElementNode {
   }
 }
 
-export function $createPartHeadingItemNode() {
-  return new PartHeadingItemNode();
+export function $createSectionHeadingItemNode() {
+  return new SectionHeadingItemNode();
 }
 
-export function $isPartHeadingItemNode(node) {
-  return node instanceof PartHeadingItemNode;
+export function $isSectionHeadingItemNode(node) {
+  return node instanceof SectionHeadingItemNode;
 }
 
-export const INSERT_PARTHEADINGITEM_COMMAND = createCommand(
-  "insertPartHeadingItem"
+export const INSERT_SECTIONHEADINGITEM_COMMAND = createCommand(
+  "insertSectionHeadingItem"
 );

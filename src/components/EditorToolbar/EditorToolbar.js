@@ -12,11 +12,13 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { INSERT_PARTHEADING_COMMAND } from "../Editor/Plugins/Lists/PartHeading";
+import { INSERT_SECTIONHEADING_COMMAND } from "../Editor/Plugins/Lists/SectionHeading";
+import { INSERT_SUBSECTION_COMMAND } from "../Editor/Plugins/Lists/Subsection";
 // import { INSERT_PARTHEADING_COMMAND } from "../Editor/Plugins/Lists/PartHeading";
 
 const TextTypes = ["paragraph"];
 const HeadingTypes = ["h1", "h2", "h5"];
-const ListTypes = ["ol"];
+const ListTypes = ["ol", "ul"];
 
 const TypeDisplayNames = {
   paragraph: "Paragraph",
@@ -24,6 +26,7 @@ const TypeDisplayNames = {
   h2: "Heading 2",
   h5: "End Of Section",
   ol: "Ordered List",
+  ul: "Unordered List",
 };
 
 function TextToolbarPlugin(props) {
@@ -123,6 +126,44 @@ function PartHeadingToolbarPlugin() {
   );
 }
 
+function SectionHeadingToolbarPlugin() {
+  const [editor] = useLexicalComposerContext();
+  const onClick = () => {
+    editor.dispatchCommand(INSERT_SECTIONHEADING_COMMAND, undefined);
+  };
+  return (
+    <Grid item xs={0} key={"sectionheading"}>
+      <Button
+        variant={"outlined"}
+        onClick={() => {
+          onClick();
+        }}
+      >
+        Section Heading
+      </Button>
+    </Grid>
+  );
+}
+
+function SubsectionToolbarPlugin() {
+  const [editor] = useLexicalComposerContext();
+  const onClick = () => {
+    editor.dispatchCommand(INSERT_SUBSECTION_COMMAND, undefined);
+  };
+  return (
+    <Grid item xs={0} key={"subsection"}>
+      <Button
+        variant={"outlined"}
+        onClick={() => {
+          onClick();
+        }}
+      >
+        Subsection
+      </Button>
+    </Grid>
+  );
+}
+
 function ToolbarPlugin(props) {
   const [editor] = useLexicalComposerContext();
   return (
@@ -131,8 +172,10 @@ function ToolbarPlugin(props) {
         <Grid container spacing={1} columnSpacing={{ md: 0 }}>
           <HeadingToolbarPlugin />
           {/* <TextToolbarPlugin /> */}
+          {/* <ListToolbarPlugin /> */}
           <PartHeadingToolbarPlugin />
-          <ListToolbarPlugin />
+          <SectionHeadingToolbarPlugin />
+          <SubsectionToolbarPlugin />
         </Grid>
       </Box>
     </div>
