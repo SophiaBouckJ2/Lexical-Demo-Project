@@ -6,24 +6,24 @@ import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
 } from "@lexical/list";
-import { $createListNode } from "@lexical/list";
-import { $getNodeByKey, $isTextNode } from "lexical";
 
 // import { Button } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import { INSERT_PARTHEADING_COMMAND } from "../Editor/Plugins/Lists/PartHeading";
+// import { INSERT_PARTHEADING_COMMAND } from "../Editor/Plugins/Lists/PartHeading";
 
 const TextTypes = ["paragraph"];
-const HeadingTypes = ["h1", "h2"];
-const ListTypes = ["ol", "ul"];
+const HeadingTypes = ["h1", "h2", "h5"];
+const ListTypes = ["ol"];
 
 const TypeDisplayNames = {
-  paragraph: "End Of Section",
+  paragraph: "Paragraph",
   h1: "Heading 1",
   h2: "Heading 2",
+  h5: "End Of Section",
   ol: "Ordered List",
-  ul: "Unordered List",
 };
 
 function TextToolbarPlugin(props) {
@@ -104,6 +104,25 @@ function ListToolbarPlugin(props) {
   });
 }
 
+function PartHeadingToolbarPlugin() {
+  const [editor] = useLexicalComposerContext();
+  const onClick = () => {
+    editor.dispatchCommand(INSERT_PARTHEADING_COMMAND, undefined);
+  };
+  return (
+    <Grid item xs={0} key={"partheading"}>
+      <Button
+        variant={"outlined"}
+        onClick={() => {
+          onClick();
+        }}
+      >
+        Part Heading
+      </Button>
+    </Grid>
+  );
+}
+
 function ToolbarPlugin(props) {
   const [editor] = useLexicalComposerContext();
   return (
@@ -111,8 +130,9 @@ function ToolbarPlugin(props) {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1} columnSpacing={{ md: 0 }}>
           <HeadingToolbarPlugin />
+          {/* <TextToolbarPlugin /> */}
+          <PartHeadingToolbarPlugin />
           <ListToolbarPlugin />
-          <TextToolbarPlugin />
         </Grid>
       </Box>
     </div>

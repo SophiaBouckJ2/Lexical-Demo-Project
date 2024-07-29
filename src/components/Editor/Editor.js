@@ -24,32 +24,48 @@ import TreeViewPlugin from "./Plugins/TreeView/TreeViewPlugin";
 import ListMaxIndentLevelPlugin from "./Plugins/ListMaxIndentLevel/ListMaxIndentLevelPlugin";
 import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
 import { $createHeadingNode } from "@lexical/rich-text";
+import {
+  $createPartHeadingItemNode,
+  $createPartHeadingNode,
+  PartHeadingItemNode,
+  PartHeadingNode,
+  PartHeadingPlugin,
+} from "./Plugins/Lists/PartHeading";
 
 const theme = {
   heading: {
     h1: `tools-editor-h1`,
     h2: `tools-editor-h2`,
+    h5: `tools-editor-endOfSection`,
   },
   list: {
-    ul: `tools-editor-ul`,
+    // ul: `tools-editor-ul`,
     ol: `tools-editor-ol`,
   },
-  paragraph: `tools-editor-endOfSection`,
+  partHeading: `tools-editor-partHeading`,
+  partHeadingItem: `tools-editor-partHeadingItem`,
 };
 
 function prepopulatedRichText() {
   const root = $getRoot();
   if (root.getFirstChild() === null) {
+    // title
     const heading = $createHeadingNode("h1");
     heading.append($createTextNode("This Is Heading One "));
     root.append(heading);
+    // subtitle
     const subheading = $createHeadingNode("h2");
     subheading.append($createTextNode("And Here Is Heading Two."));
     root.append(subheading);
-    const list = $createListNode("ol");
-    list.append($createTextNode("This is a list item."));
-    root.append(list);
-    const endOfSection = $createParagraphNode();
+    // part heading
+    const partHeading = $createPartHeadingNode();
+    const partHeadingItem = $createPartHeadingItemNode();
+    const partHeadingItemText = $createTextNode("This is a list item.");
+    partHeadingItem.append(partHeadingItemText);
+    partHeading.append(partHeadingItem);
+    root.append(partHeading);
+    // end of section
+    const endOfSection = $createHeadingNode("h5");
     endOfSection.append($createTextNode("This is the end of the section."));
     root.append(endOfSection);
   }
@@ -101,7 +117,13 @@ function Editor() {
     namespace: "MyEditor",
     theme,
     onError,
-    nodes: [HeadingNode, ListNode, ListItemNode],
+    nodes: [
+      HeadingNode,
+      ListNode,
+      ListItemNode,
+      PartHeadingNode,
+      PartHeadingItemNode,
+    ],
     editorState: prepopulatedRichText,
   };
 
@@ -115,9 +137,10 @@ function Editor() {
         ErrorBoundary={LexicalErrorBoundary}
       />
       <ListPlugin />
+      <PartHeadingPlugin />
       <TreeViewPlugin />
       {/* <ListMaxIndentLevelPlugin maxDepth={3} /> */}
-      {/* <TabIndentationPlugin />  */}
+      <TabIndentationPlugin />
 
       {/* // HistoryPlugin is a plugin that provides undo/redo functionality */}
       <HistoryPlugin />

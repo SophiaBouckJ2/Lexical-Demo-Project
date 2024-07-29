@@ -1,4 +1,7 @@
+//
 // adding a new node type to lexical example
+//
+
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
   $getSelection,

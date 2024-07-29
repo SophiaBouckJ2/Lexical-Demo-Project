@@ -1,16 +1,7 @@
-/* .lexicalComposer {
-} */
-
 .contentEditable {
   height: 300px;
   padding: 0 8px;
   border: 1px solid black;
-}
-
-.placeholder {
-  position: absolute;
-  top: 56px;
-  padding-left: 8px;
 }
 
 .tools-editor-h1 {
@@ -35,6 +26,31 @@
   text-transform: uppercase;
 }
 
+/* part heading */
+
+.tools-editor-partHeading {
+  font-family: Arial;
+  text-align: justify;
+  font-size: 10pt;
+  text-transform: uppercase;
+  counter-reset: section;
+}
+
+.tools-editor-partHeading li {
+  counter-increment: section;
+}
+
+.tools-editor-partHeading li::marker {
+  content: "";
+}
+
+.tools-editor-partHeading li::before {
+  content: "PART " counter(section) " - ";
+  margin-right: 0.5em;
+}
+
+/**/
+
 .tools-editor-ol {
   counter-reset: section;
   text-align: justify;
@@ -56,28 +72,30 @@
   margin-right: 0.5em;
 }
 
-/* matching style from docs */
+/* section heading */
 
-.tools-editor-title {
-  text-align: center;
-  font-size: 10pt;
-  font-family: Arial;
-  font-weight: bold;
-}
-
-.tools-editor-subtitle {
-  text-align: center;
-  font-size: 10pt;
-  font-family: Arial;
-  font-weight: bold;
-}
-
-.tools-editor-partheading {
+.tools-editor-section-heading {
+  counter-reset: counter;
   text-align: justify;
   font-size: 10pt;
   font-family: Arial;
   text-transform: uppercase;
 }
+
+.tools-editor-section-heading li {
+  counter-increment: counter;
+}
+
+.tools-editor-section-heading li::marker {
+  content: "";
+}
+
+.tools-editor-section-heading li::before {
+  content: "1." counter(counter);
+  margin-right: 0.5em;
+}
+
+/* matching style from docs */
 
 .tools-editor-sectionheading {
   text-align: justify;
@@ -108,24 +126,4 @@
   text-align: left;
   font-size: 10pt;
   font-family: Arial;
-}
-
-.tools-editor-endofsection {
-  text-align: center;
-  font-size: 10pt;
-  font-family: Arial;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-/* end */
-
-.tools-editor-bold {
-  color: purple;
-}
-
-.tools-editor-banner {
-  background-color: burlywood;
-  margin: 8px 0;
-  padding: 0 4px;
 }
