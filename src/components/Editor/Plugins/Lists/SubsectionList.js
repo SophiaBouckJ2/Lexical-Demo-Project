@@ -117,9 +117,14 @@ export class SubsectionListItemNode extends ElementNode {
     console.log("insertNewAfter subsectionListItem");
     const textContent = this.getTextContent();
     if (textContent === "") {
-      const newTextNode = new ParagraphNode();
-      this.replace(newTextNode);
-      return newTextNode;
+      const newParagraphNode = new ParagraphNode();
+      const parentNode = this.getParent();
+      if (parentNode != null && parentNode instanceof SubsectionListNode) {
+        // Insert the new paragraph node after the PartHeadingNode
+        parentNode.insertAfter(newParagraphNode);
+      }
+      this.remove();
+      return newParagraphNode;
     } else {
       const newBlock = new SubsectionListItemNode();
       const direction = this.getDirection();
