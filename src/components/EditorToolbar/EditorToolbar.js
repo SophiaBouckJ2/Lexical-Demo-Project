@@ -224,7 +224,6 @@ function SubSubsectionListDetailsToolbarPlugin() {
 }
 
 function ToolbarPlugin(props) {
-  const [editor] = useLexicalComposerContext();
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>

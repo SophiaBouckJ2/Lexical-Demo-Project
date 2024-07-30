@@ -11,7 +11,7 @@ import { $setBlocksType } from "@lexical/selection";
 export class SubSubsectionListDetailsNode extends ElementNode {
   /// element nodes have children so we use it here
   static getType() {
-    return "subsectionListDetails";
+    return "subSubsectionListDetails";
   }
   constructor(key) {
     super(key);

@@ -7,13 +7,8 @@ import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useEffect } from "react";
-import {
-  $createParagraphNode,
-  $createTextNode,
-  $getRoot,
-  FORMAT_TEXT_COMMAND,
-} from "lexical";
-import { HeadingNode } from "@lexical/rich-text";
+import { $createTextNode, $getRoot, FORMAT_TEXT_COMMAND } from "lexical";
+import { HeadingNode, $createHeadingNode } from "@lexical/rich-text";
 
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { ListNode, ListItemNode } from "@lexical/list";
@@ -22,7 +17,6 @@ import ToolbarPlugin from "../EditorToolbar/EditorToolbar";
 import TreeViewPlugin from "./Plugins/TreeView/TreeViewPlugin";
 import ListMaxIndentLevelPlugin from "./Plugins/ListMaxIndentLevel/ListMaxIndentLevelPlugin";
 import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
-import { $createHeadingNode } from "@lexical/rich-text";
 import {
   $createPartHeadingItemNode,
   $createPartHeadingNode,
@@ -58,6 +52,13 @@ import {
   SubsectionListDetailsNode,
   SubsectionListDetailsPlugin,
 } from "./Plugins/Lists/SubsectionListDetails";
+import {
+  $createSubSubsectionListDetailsItemNode,
+  $createSubSubsectionListDetailsNode,
+  SubSubsectionListDetailsItemNode,
+  SubSubsectionListDetailsNode,
+  SubSubsectionListDetailsPlugin,
+} from "./Plugins/Lists/SubSubsectionListDetails";
 
 const theme = {
   heading: {
@@ -140,15 +141,15 @@ function prepopulatedRichText() {
     subsectionListDetails.append(subsectionListDetailsItem);
     root.append(subsectionListDetails);
     // sub subsection list details
-    // const subSubsectionListDetails = $createSubSubsectionListDetailsNode();
-    // const subSubsectionListDetailsItem =
-    //   $createSubSubsectionListDetailsItemNode();
-    // const subSubsectionListDetailsItemText = $createTextNode(
-    //   "This is a sub subsection list details."
-    // );
-    // subSubsectionListDetailsItem.append(subSubsectionListDetailsItemText);
-    // subSubsectionListDetails.append(subSubsectionListDetailsItem);
-    // root.append(subSubsectionListDetails);
+    const subSubsectionListDetails = $createSubSubsectionListDetailsNode();
+    const subSubsectionListDetailsItem =
+      $createSubSubsectionListDetailsItemNode();
+    const subSubsectionListDetailsItemText = $createTextNode(
+      "This is a sub subsection list details."
+    );
+    subSubsectionListDetailsItem.append(subSubsectionListDetailsItemText);
+    subSubsectionListDetails.append(subSubsectionListDetailsItem);
+    root.append(subSubsectionListDetails);
     // end of section
     const endOfSection = $createHeadingNode("h5");
     endOfSection.append($createTextNode("This is the end of the section."));
@@ -203,19 +204,29 @@ function Editor() {
     theme,
     onError,
     nodes: [
+      // heading
       HeadingNode,
+      // built in list
       ListNode,
       ListItemNode,
+      // part heading
       PartHeadingNode,
       PartHeadingItemNode,
+      // section heading
       SectionHeadingNode,
       SectionHeadingItemNode,
+      // subsection
       SubsectionNode,
       SubsectionItemNode,
+      // subsection list
       SubsectionListNode,
       SubsectionListItemNode,
+      // subsection list details
       SubsectionListDetailsNode,
       SubsectionListDetailsItemNode,
+      // sub subsection list details
+      SubSubsectionListDetailsNode,
+      SubSubsectionListDetailsItemNode,
     ],
     editorState: prepopulatedRichText,
   };
@@ -236,6 +247,7 @@ function Editor() {
       <SubsectionPlugin />
       <SubsectionListPlugin />
       <SubsectionListDetailsPlugin />
+      <SubSubsectionListDetailsPlugin />
 
       <TreeViewPlugin />
 

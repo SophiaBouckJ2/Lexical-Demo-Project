@@ -113,16 +113,21 @@
   margin-right: 0.5em;
 }
 
-/* matching style from docs */
+/* subsubsection list details */
 
-.tools-editor-subsectionlistdetails {
+.tools-editor-subSubsectionListDetails {
   text-align: left;
   font-size: 10pt;
   font-family: Arial;
+  counter-reset: section;
 }
 
-.tools-editor-subsubsectionlistdetails {
-  text-align: left;
-  font-size: 10pt;
-  font-family: Arial;
+.tools-editor-subSubsectionListDetails li {
+  list-style-type: none; /* Remove default list style */
+  counter-increment: section;
+}
+
+.tools-editor-subSubsectionListDetails li::before {
+  content: counter(section) ")";
+  margin-right: 0.5em;
 }
