@@ -5,6 +5,7 @@ import {
   createCommand,
   COMMAND_PRIORITY_LOW,
   ElementNode,
+  ParagraphNode,
 } from "lexical";
 import { $setBlocksType } from "@lexical/selection";
 
@@ -111,12 +112,19 @@ export class SubsectionItemNode extends ElementNode {
 
   // this triggers on "Enter" key press
   insertNewAfter(selection, restoreSelection) {
-    console.log("insertNewAfter");
-    const newBlock = new SubsectionItemNode();
-    const direction = this.getDirection();
-    newBlock.setDirection(direction);
-    this.insertAfter(newBlock, restoreSelection);
-    return newBlock;
+    console.log("insertNewAfter subsectionItem");
+    const textContent = this.getTextContent();
+    if (textContent === "") {
+      const newTextNode = new ParagraphNode();
+      this.replace(newTextNode);
+      return newTextNode;
+    } else {
+      const newBlock = new SubsectionItemNode();
+      const direction = this.getDirection();
+      newBlock.setDirection(direction);
+      this.insertAfter(newBlock, restoreSelection);
+      return newBlock;
+    }
   }
 
   //

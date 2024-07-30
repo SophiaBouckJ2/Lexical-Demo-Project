@@ -130,12 +130,10 @@ export class PartHeadingItemNode extends ElementNode {
     console.log("insertNewAfter partHeadingItem");
     const textContent = this.getTextContent();
     if (textContent === "") {
-      console.log("textContent is empty");
       const newTextNode = new ParagraphNode();
       this.replace(newTextNode);
       return newTextNode;
     } else {
-      console.log("textContent is not empty");
       const newBlock = new PartHeadingItemNode();
       const direction = this.getDirection();
       newBlock.setDirection(direction);
