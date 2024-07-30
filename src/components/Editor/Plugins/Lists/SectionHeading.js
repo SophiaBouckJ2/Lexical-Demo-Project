@@ -6,8 +6,13 @@ import {
   COMMAND_PRIORITY_LOW,
   ElementNode,
   ParagraphNode,
+  KEY_TAB_COMMAND,
+  $createTextNode,
+  $setSelection,
+  $createNodeSelection,
 } from "lexical";
 import { $setBlocksType } from "@lexical/selection";
+import { $createSubsectionItemNode, $createSubsectionNode } from "./Subsection";
 
 export class SectionHeadingNode extends ElementNode {
   /// element nodes have children so we use it here
@@ -86,6 +91,42 @@ export function SectionHeadingPlugin() {
     },
     COMMAND_PRIORITY_LOW
   );
+
+  // Register a command for the Tab key
+  editor.registerCommand(
+    KEY_TAB_COMMAND,
+    (event) => {
+      const selection = $getSelection();
+      if ($isRangeSelection(selection)) {
+        const node = selection.anchor.getNode();
+        if ($isSectionHeadingItemNode(node)) {
+          const parentNode = node.getParent();
+          if ($isSectionHeadingNode(parentNode)) {
+            // remove existing node
+            node.remove();
+            // create the new node
+            const subSectionHeading = $createSubsectionNode();
+            const subSectionHeadingItem = $createSubsectionItemNode();
+            const subSectionHeadingItemTextNode = $createTextNode();
+            subSectionHeadingItem.append(subSectionHeadingItemTextNode);
+            subSectionHeading.append(subSectionHeadingItem);
+            parentNode.append(subSectionHeading);
+            // set the selection (cursor)
+            const someKey = subSectionHeadingItemTextNode.getKey();
+            const nodeSelection = $createNodeSelection();
+            nodeSelection.add(someKey);
+            $setSelection(nodeSelection);
+
+            event.preventDefault();
+            return true;
+          }
+        }
+      }
+      return false;
+    },
+    COMMAND_PRIORITY_LOW
+  );
+
   return null;
 }
 

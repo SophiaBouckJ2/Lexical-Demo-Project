@@ -98,9 +98,7 @@ function prepopulatedRichText() {
     // part heading
     const partHeading = $createPartHeadingNode();
     const partHeadingItem = $createPartHeadingItemNode();
-    const partHeadingItemText = $createTextNode(
-      "This is a part heading list item."
-    );
+    const partHeadingItemText = $createTextNode("This is a part heading item.");
     partHeadingItem.append(partHeadingItemText);
     partHeading.append(partHeadingItem);
     root.append(partHeading);
@@ -108,48 +106,46 @@ function prepopulatedRichText() {
     const sectionHeading = $createSectionHeadingNode();
     const sectionHeadingItem = $createSectionHeadingItemNode();
     const sectionHeadingItemText = $createTextNode(
-      "This is a section heading list item."
+      "This is a section heading item."
     );
     sectionHeadingItem.append(sectionHeadingItemText);
     sectionHeading.append(sectionHeadingItem);
-    root.append(sectionHeading);
+    partHeading.append(sectionHeading);
     // subsection
     const subsection = $createSubsectionNode();
     const subsectionItem = $createSubsectionItemNode();
-    const subsectionItemText = $createTextNode(
-      "This is a subsection list item."
-    );
+    const subsectionItemText = $createTextNode("This is a subsection item.");
     subsectionItem.append(subsectionItemText);
     subsection.append(subsectionItem);
-    root.append(subsection);
+    sectionHeading.append(subsection);
     // subsection list
     const subsectionList = $createSubsectionListNode();
     const subsectionListItem = $createSubsectionListItemNode();
     const subsectionListItemText = $createTextNode(
-      "This is a subsection list."
+      "This is a subsection list item."
     );
     subsectionListItem.append(subsectionListItemText);
     subsectionList.append(subsectionListItem);
-    root.append(subsectionList);
+    subsection.append(subsectionList);
     // subsection list details
     const subsectionListDetails = $createSubsectionListDetailsNode();
     const subsectionListDetailsItem = $createSubsectionListDetailsItemNode();
     const subsectionListDetailsItemText = $createTextNode(
-      "This is a subsection list details."
+      "This is a subsection list details item."
     );
     subsectionListDetailsItem.append(subsectionListDetailsItemText);
     subsectionListDetails.append(subsectionListDetailsItem);
-    root.append(subsectionListDetails);
+    subsectionList.append(subsectionListDetails);
     // sub subsection list details
     const subSubsectionListDetails = $createSubSubsectionListDetailsNode();
     const subSubsectionListDetailsItem =
       $createSubSubsectionListDetailsItemNode();
     const subSubsectionListDetailsItemText = $createTextNode(
-      "This is a sub subsection list details."
+      "This is a sub subsection list details item."
     );
     subSubsectionListDetailsItem.append(subSubsectionListDetailsItemText);
     subSubsectionListDetails.append(subSubsectionListDetailsItem);
-    root.append(subSubsectionListDetails);
+    subsectionListDetails.append(subSubsectionListDetails);
     // end of section
     const endOfSection = $createHeadingNode("h5");
     endOfSection.append($createTextNode("This is the end of the section."));
@@ -251,7 +247,7 @@ function Editor() {
 
       <TreeViewPlugin />
 
-      <ListMaxIndentLevelPlugin maxDepth={3} />
+      {/* <ListMaxIndentLevelPlugin maxDepth={3} /> */}
       <TabIndentationPlugin />
 
       {/* // HistoryPlugin is a plugin that provides undo/redo functionality */}

@@ -6,6 +6,7 @@ import {
   COMMAND_PRIORITY_LOW,
   ElementNode,
   ParagraphNode,
+  KEY_TAB_COMMAND,
 } from "lexical";
 import { $setBlocksType } from "@lexical/selection";
 
@@ -93,6 +94,17 @@ export function SubSubsectionListDetailsPlugin() {
     },
     COMMAND_PRIORITY_LOW
   );
+
+  editor.registerCommand(
+    KEY_TAB_COMMAND,
+    (event) => {
+      // do nothing
+      event.preventDefault();
+      return true;
+    },
+    COMMAND_PRIORITY_LOW
+  );
+
   return null;
 }
 

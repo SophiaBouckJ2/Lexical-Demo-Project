@@ -1,5 +1,5 @@
 .contentEditable {
-  height: 300px;
+  height: 500px;
   padding: 0 8px;
   border: 1px solid black;
 }
@@ -32,7 +32,6 @@
   font-family: Arial;
   text-align: justify;
   font-size: 10pt;
-  /* text-transform: uppercase; */
   counter-reset: section;
 }
 
@@ -52,7 +51,6 @@
   text-align: justify;
   font-size: 10pt;
   font-family: Arial;
-  /* text-transform: uppercase; */
   counter-reset: section;
 }
 
@@ -91,6 +89,16 @@
   text-align: left;
   font-size: 10pt;
   font-family: Arial;
+  counter-reset: section;
+}
+
+.tools-editor-subsectionList li {
+  list-style-type: none;
+  counter-increment: section;
+}
+
+.tools-editor-subsectionList li::before {
+  content: counter(section) ".";
   margin-right: 0.5em;
 }
 
