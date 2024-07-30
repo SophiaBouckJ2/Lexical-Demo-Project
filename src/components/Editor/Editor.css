@@ -32,7 +32,7 @@
   font-family: Arial;
   text-align: justify;
   font-size: 10pt;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   counter-reset: section;
 }
 
@@ -52,7 +52,7 @@
   text-align: justify;
   font-size: 10pt;
   font-family: Arial;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   counter-reset: section;
 }
 
