@@ -10,9 +10,11 @@ import {
   $createTextNode,
   $setSelection,
   $createNodeSelection,
+  RootNode,
 } from "lexical";
 import { $setBlocksType } from "@lexical/selection";
 import { $createSubsectionItemNode, $createSubsectionNode } from "./Subsection";
+import { traverseUpToParentNode } from "./Utils/Utils";
 
 export class SectionHeadingNode extends ElementNode {
   /// element nodes have children so we use it here
@@ -159,9 +161,8 @@ export class SectionHeadingItemNode extends ElementNode {
     const textContent = this.getTextContent();
     if (textContent === "") {
       const newParagraphNode = new ParagraphNode();
-      const parentNode = this.getParent();
-      if (parentNode != null && parentNode instanceof SectionHeadingNode) {
-        // Insert the new paragraph node after the PartHeadingNode
+      const parentNode = traverseUpToParentNode(this, "partHeading");
+      if (parentNode) {
         parentNode.insertAfter(newParagraphNode);
       }
       this.remove();

@@ -228,9 +228,8 @@ function ToolbarPlugin(props) {
     <div>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1} columnSpacing={{ md: 0 }}>
+          <TextToolbarPlugin />
           <HeadingToolbarPlugin />
-          {/* <TextToolbarPlugin /> */}
-          {/* <ListToolbarPlugin /> */}
           <PartHeadingToolbarPlugin />
           <SectionHeadingToolbarPlugin />
           <SubsectionToolbarPlugin />

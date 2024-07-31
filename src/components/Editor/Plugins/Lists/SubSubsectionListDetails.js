@@ -7,8 +7,10 @@ import {
   ElementNode,
   ParagraphNode,
   KEY_TAB_COMMAND,
+  RootNode,
 } from "lexical";
 import { $setBlocksType } from "@lexical/selection";
+import { traverseUpToParentNode, traverseUpToRootNode } from "./Utils/Utils";
 
 export class SubSubsectionListDetailsNode extends ElementNode {
   /// element nodes have children so we use it here
@@ -139,12 +141,8 @@ export class SubSubsectionListDetailsItemNode extends ElementNode {
     const textContent = this.getTextContent();
     if (textContent === "") {
       const newParagraphNode = new ParagraphNode();
-      const parentNode = this.getParent();
-      if (
-        parentNode != null &&
-        parentNode instanceof SubSubsectionListDetailsNode
-      ) {
-        // Insert the new paragraph node after the PartHeadingNode
+      const parentNode = traverseUpToParentNode(this, "partHeading");
+      if (parentNode) {
         parentNode.insertAfter(newParagraphNode);
       }
       this.remove();

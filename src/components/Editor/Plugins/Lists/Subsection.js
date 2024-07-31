@@ -10,12 +10,14 @@ import {
   $createTextNode,
   $createNodeSelection,
   $setSelection,
+  RootNode,
 } from "lexical";
 import { $setBlocksType } from "@lexical/selection";
 import {
   $createSubsectionListItemNode,
   $createSubsectionListNode,
 } from "./SubsectionList";
+import { traverseUpToParentNode } from "./Utils/Utils";
 
 export class SubsectionNode extends ElementNode {
   /// element nodes have children so we use it here
@@ -160,9 +162,8 @@ export class SubsectionItemNode extends ElementNode {
     const textContent = this.getTextContent();
     if (textContent === "") {
       const newParagraphNode = new ParagraphNode();
-      const parentNode = this.getParent();
-      if (parentNode != null && parentNode instanceof SubsectionNode) {
-        // Insert the new paragraph node after the PartHeadingNode
+      const parentNode = traverseUpToParentNode(this, "partHeading");
+      if (parentNode) {
         parentNode.insertAfter(newParagraphNode);
       }
       this.remove();
