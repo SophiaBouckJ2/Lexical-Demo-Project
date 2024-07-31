@@ -19,7 +19,10 @@ import {
   $createSectionHeadingItemNode,
   $createSectionHeadingNode,
 } from "./SectionHeading";
-import { traverseUpToNextParentNode } from "./Utils/Utils";
+import {
+  traverseDownToLastChildNodeofType,
+  traverseUpToNextParentNode,
+} from "./Utils/Utils";
 
 export class PartHeadingNode extends ElementNode {
   /// element nodes have children so we use it here
@@ -112,28 +115,35 @@ export function PartHeadingPlugin() {
       const selection = $getSelection();
       if ($isRangeSelection(selection)) {
         const node = selection.anchor.getNode();
-        if ($isPartHeadingItemNode(node)) {
-          const parentNode = node.getParent();
-          if ($isPartHeadingNode(parentNode)) {
-            // remove existing node
-            node.remove();
-            // create the new node
-            const sectionHeading = $createSectionHeadingNode();
-            const sectionHeadingItem = $createSectionHeadingItemNode();
-            const sectionHeadingItemTextNode = $createTextNode();
-            sectionHeadingItem.append(sectionHeadingItemTextNode);
-            sectionHeading.append(sectionHeadingItem);
-            parentNode.append(sectionHeading);
-            // set the selection (cursor)
-            const someKey = sectionHeadingItemTextNode.getKey();
-            const nodeSelection = $createNodeSelection();
-            nodeSelection.add(someKey);
-            $setSelection(nodeSelection);
 
-            event.preventDefault();
-            return true;
-          }
+        const parentNode = node.getParent();
+        const nextLeafNode = traverseDownToLastChildNodeofType(
+          parentNode,
+          "sectionHeading"
+        );
+
+        // remove existing node
+        node.remove();
+
+        // create the new node
+        const sectionHeadingItem = $createSectionHeadingItemNode();
+        const sectionHeadingItemTextNode = $createTextNode();
+        sectionHeadingItem.append(sectionHeadingItemTextNode);
+
+        // Insert the new node after the last child node of the parent
+        if (nextLeafNode) {
+          nextLeafNode.append(sectionHeadingItem);
         }
+
+        // set the selection (cursor)
+        const someKey = sectionHeadingItemTextNode.getKey();
+        const nodeSelection = $createNodeSelection();
+        nodeSelection.add(someKey);
+        $setSelection(nodeSelection);
+
+        event.preventDefault();
+
+        return true;
       }
       return false;
     },

@@ -18,6 +18,10 @@ import {
   $createSubSubsectionListDetailsNode,
 } from "./SubSubsectionListDetails";
 import {
+  traverseDownToLastChildNodeofType,
+  traverseDownToLastLeafNode,
+  traverseDownToLastLeafNodeofType,
+  traverseDownToNextChildNode,
   traverseUpToNextParentNode,
   traverseUpToParentNode,
 } from "./Utils/Utils";
@@ -110,29 +114,35 @@ export function SubsectionListDetailsPlugin() {
       const selection = $getSelection();
       if ($isRangeSelection(selection)) {
         const node = selection.anchor.getNode();
-        if ($isSubsectionListDetailsItemNode(node)) {
-          const parentNode = node.getParent();
-          if ($isSubsectionListDetailsNode(parentNode)) {
-            // remove existing node
-            node.remove();
-            // create the new node
-            const sectionHeading = $createSubSubsectionListDetailsNode();
-            const sectionHeadingItem =
-              $createSubSubsectionListDetailsItemNode();
-            const sectionHeadingItemTextNode = $createTextNode();
-            sectionHeadingItem.append(sectionHeadingItemTextNode);
-            sectionHeading.append(sectionHeadingItem);
-            parentNode.append(sectionHeading);
-            // set the selection (cursor)
-            const someKey = sectionHeadingItemTextNode.getKey();
-            const nodeSelection = $createNodeSelection();
-            nodeSelection.add(someKey);
-            $setSelection(nodeSelection);
 
-            event.preventDefault();
-            return true;
-          }
+        const parentNode = node.getParent();
+        const nextLeafNode = traverseDownToLastChildNodeofType(
+          parentNode,
+          "subSubsectionListDetails"
+        );
+
+        // remove existing node
+        node.remove();
+
+        // create the new node
+        const sectionHeadingItem = $createSubSubsectionListDetailsItemNode();
+        const sectionHeadingItemTextNode = $createTextNode();
+        sectionHeadingItem.append(sectionHeadingItemTextNode);
+
+        // Insert the new node after the last child node of the parent
+        if (nextLeafNode) {
+          nextLeafNode.append(sectionHeadingItem);
         }
+
+        // set the selection (cursor)
+        const someKey = sectionHeadingItemTextNode.getKey();
+        const nodeSelection = $createNodeSelection();
+        nodeSelection.add(someKey);
+        $setSelection(nodeSelection);
+
+        event.preventDefault();
+
+        return true;
       }
       return false;
     },

@@ -24,4 +24,17 @@ export function traverseUpToNextParentNode(node) {
   return node.getParent();
 }
 
+// retrieve the last leaf node
+export function traverseDownToLastChildNodeofType(node, type) {
+  let currentNode = node;
+  let children = currentNode.getChildren();
+  console.log(children);
+  for (let i = children.length - 1; i >= 0; i--) {
+    if (children[i].getType() === type) {
+      return children[i];
+    }
+  }
+  return null;
+}
+
 export default traverseUpToRootNode;
