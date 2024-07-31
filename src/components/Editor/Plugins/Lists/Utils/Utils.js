@@ -20,4 +20,8 @@ export function traverseUpToParentNode(node, parentType) {
   return null;
 }
 
+export function traverseUpToNextParentNode(node) {
+  return node.getParent();
+}
+
 export default traverseUpToRootNode;

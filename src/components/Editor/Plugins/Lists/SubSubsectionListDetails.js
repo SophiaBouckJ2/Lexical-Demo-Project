@@ -10,7 +10,16 @@ import {
   RootNode,
 } from "lexical";
 import { $setBlocksType } from "@lexical/selection";
-import { traverseUpToParentNode, traverseUpToRootNode } from "./Utils/Utils";
+import {
+  traverseUpToNextParentNode,
+  traverseUpToParentNode,
+  traverseUpToRootNode,
+} from "./Utils/Utils";
+import { SubsectionNode } from "./Subsection";
+import {
+  SubsectionListDetailsItemNode,
+  SubsectionListDetailsNode,
+} from "./SubsectionListDetails";
 
 export class SubSubsectionListDetailsNode extends ElementNode {
   /// element nodes have children so we use it here
@@ -140,13 +149,13 @@ export class SubSubsectionListDetailsItemNode extends ElementNode {
     console.log("insertNewAfter subSubsectionListDetailsItem");
     const textContent = this.getTextContent();
     if (textContent === "") {
-      const newParagraphNode = new ParagraphNode();
-      const parentNode = traverseUpToParentNode(this, "partHeading");
+      const newSubsectionNode = new SubsectionListDetailsItemNode();
+      const parentNode = traverseUpToNextParentNode(this);
       if (parentNode) {
-        parentNode.insertAfter(newParagraphNode);
+        parentNode.insertAfter(newSubsectionNode);
       }
       this.remove();
-      return newParagraphNode;
+      return newSubsectionNode;
     } else {
       const newBlock = new SubSubsectionListDetailsItemNode();
       const direction = this.getDirection();

@@ -19,7 +19,7 @@ import {
   $createSectionHeadingItemNode,
   $createSectionHeadingNode,
 } from "./SectionHeading";
-import { traverseUpToParentNode } from "./Utils/Utils";
+import { traverseUpToNextParentNode } from "./Utils/Utils";
 
 export class PartHeadingNode extends ElementNode {
   /// element nodes have children so we use it here
@@ -177,7 +177,7 @@ export class PartHeadingItemNode extends ElementNode {
     const textContent = this.getTextContent();
     if (textContent === "") {
       const newParagraphNode = new ParagraphNode();
-      const parentNode = traverseUpToParentNode(this, "partHeading");
+      const parentNode = traverseUpToNextParentNode(this);
       if (parentNode) {
         parentNode.insertAfter(newParagraphNode);
       }

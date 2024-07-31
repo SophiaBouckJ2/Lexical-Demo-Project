@@ -14,7 +14,11 @@ import {
 } from "lexical";
 import { $setBlocksType } from "@lexical/selection";
 import { $createSubsectionItemNode, $createSubsectionNode } from "./Subsection";
-import { traverseUpToParentNode } from "./Utils/Utils";
+import {
+  traverseUpToNextParentNode,
+  traverseUpToParentNode,
+} from "./Utils/Utils";
+import { PartHeadingItemNode } from "./PartHeading";
 
 export class SectionHeadingNode extends ElementNode {
   /// element nodes have children so we use it here
@@ -160,13 +164,13 @@ export class SectionHeadingItemNode extends ElementNode {
     console.log("insertNewAfter sectionHeadingItem");
     const textContent = this.getTextContent();
     if (textContent === "") {
-      const newParagraphNode = new ParagraphNode();
-      const parentNode = traverseUpToParentNode(this, "partHeading");
+      const newSubsectionNode = new PartHeadingItemNode();
+      const parentNode = traverseUpToNextParentNode(this);
       if (parentNode) {
-        parentNode.insertAfter(newParagraphNode);
+        parentNode.insertAfter(newSubsectionNode);
       }
       this.remove();
-      return newParagraphNode;
+      return newSubsectionNode;
     } else {
       const newBlock = new SectionHeadingItemNode();
       const direction = this.getDirection();

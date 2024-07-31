@@ -17,7 +17,11 @@ import {
   $createSubsectionListItemNode,
   $createSubsectionListNode,
 } from "./SubsectionList";
-import { traverseUpToParentNode } from "./Utils/Utils";
+import {
+  traverseUpToNextParentNode,
+  traverseUpToParentNode,
+} from "./Utils/Utils";
+import { SectionHeadingItemNode } from "./SectionHeading";
 
 export class SubsectionNode extends ElementNode {
   /// element nodes have children so we use it here
@@ -161,13 +165,13 @@ export class SubsectionItemNode extends ElementNode {
     console.log("insertNewAfter subsectionItem");
     const textContent = this.getTextContent();
     if (textContent === "") {
-      const newParagraphNode = new ParagraphNode();
-      const parentNode = traverseUpToParentNode(this, "partHeading");
+      const newSubsectionNode = new SectionHeadingItemNode();
+      const parentNode = traverseUpToNextParentNode(this);
       if (parentNode) {
-        parentNode.insertAfter(newParagraphNode);
+        parentNode.insertAfter(newSubsectionNode);
       }
       this.remove();
-      return newParagraphNode;
+      return newSubsectionNode;
     } else {
       const newBlock = new SubsectionItemNode();
       const direction = this.getDirection();
