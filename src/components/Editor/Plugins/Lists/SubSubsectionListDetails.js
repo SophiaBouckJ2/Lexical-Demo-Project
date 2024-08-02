@@ -106,15 +106,16 @@ export function SubSubsectionListDetailsPlugin() {
     COMMAND_PRIORITY_LOW
   );
 
-  editor.registerCommand(
-    KEY_TAB_COMMAND,
-    (event) => {
-      // do nothing
-      event.preventDefault();
-      return true;
-    },
-    COMMAND_PRIORITY_LOW
-  );
+  // // this is to prevent tab from moving the cursor to the next element
+  // editor.registerCommand(
+  //   KEY_TAB_COMMAND,
+  //   (event) => {
+  //     // do nothing
+  //     event.preventDefault();
+  //     return true;
+  //   },
+  //   COMMAND_PRIORITY_LOW
+  // );
 
   return null;
 }

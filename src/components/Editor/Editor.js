@@ -7,12 +7,7 @@ import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { useEffect } from "react";
-import {
-  $createParagraphNode,
-  $createTextNode,
-  $getRoot,
-  FORMAT_TEXT_COMMAND,
-} from "lexical";
+import { FORMAT_TEXT_COMMAND } from "lexical";
 import { HeadingNode } from "@lexical/rich-text";
 
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
@@ -22,38 +17,27 @@ import ToolbarPlugin from "../EditorToolbar/EditorToolbar";
 import TreeViewPlugin from "./Plugins/TreeView/TreeViewPlugin";
 import ListMaxIndentLevelPlugin from "./Plugins/ListMaxIndentLevel/ListMaxIndentLevelPlugin";
 import { TabIndentationPlugin } from "@lexical/react/LexicalTabIndentationPlugin";
-import { $createHeadingNode } from "@lexical/rich-text";
 import {
-  $createPartHeadingItemNode,
-  $createPartHeadingNode,
   PartHeadingItemNode,
   PartHeadingNode,
   PartHeadingPlugin,
 } from "./Plugins/Lists/PartHeading";
 import {
-  $createSectionHeadingItemNode,
-  $createSectionHeadingNode,
   SectionHeadingItemNode,
   SectionHeadingNode,
   SectionHeadingPlugin,
 } from "./Plugins/Lists/SectionHeading";
 import {
-  $createSubsectionItemNode,
-  $createSubsectionNode,
   SubsectionItemNode,
   SubsectionNode,
   SubsectionPlugin,
 } from "./Plugins/Lists/Subsection";
 import {
-  $createSubsectionListItemNode,
-  $createSubsectionListNode,
   SubsectionListItemNode,
   SubsectionListNode,
   SubsectionListPlugin,
 } from "./Plugins/Lists/SubsectionList";
 import {
-  $createSubsectionListDetailsItemNode,
-  $createSubsectionListDetailsNode,
   SubsectionListDetailsItemNode,
   SubsectionListDetailsNode,
   SubsectionListDetailsPlugin,
@@ -142,25 +126,20 @@ function Editor() {
         ErrorBoundary={LexicalErrorBoundary}
       />
       <ListPlugin />
-
       <PartHeadingPlugin />
       <SectionHeadingPlugin />
       <SubsectionPlugin />
       <SubsectionListPlugin />
       <SubsectionListDetailsPlugin />
       <SubSubsectionListDetailsPlugin />
-
       <TreeViewPlugin />
-
       <ListMaxIndentLevelPlugin maxDepth={3} />
-      <TabIndentationPlugin />
-
+      <TabIndentationPlugin />{" "}
+      {/* // TabIndentationPlugin is a plugin that provides tab indentation functionality */}
       {/* // HistoryPlugin is a plugin that provides undo/redo functionality */}
       <HistoryPlugin />
-
       {/* // Disable bold and italic formatting via CMD-b and CMD-i */}
       <DisableShortcutFormatting />
-
       {/* // MyOnChangePlugin is a custom plugin that logs the editor state to the console */}
       {/* <MyOnChangePlugin onChange={(editorState) => console.log(editorState)} /> */}
     </LexicalComposer>

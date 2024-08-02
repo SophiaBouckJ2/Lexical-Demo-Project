@@ -101,47 +101,47 @@ export function SubsectionPlugin() {
     COMMAND_PRIORITY_LOW
   );
 
-  // Register a command for the Tab key
-  editor.registerCommand(
-    KEY_TAB_COMMAND,
-    (event) => {
-      const selection = $getSelection();
-      if ($isRangeSelection(selection)) {
-        const node = selection.anchor.getNode();
+  // // Register a command for the Tab key
+  // editor.registerCommand(
+  //   KEY_TAB_COMMAND,
+  //   (event) => {
+  //     const selection = $getSelection();
+  //     if ($isRangeSelection(selection)) {
+  //       const node = selection.anchor.getNode();
 
-        const parentNode = node.getParent();
-        const nextLeafNode = traverseDownToLastChildNodeofType(
-          parentNode,
-          "subsectionList"
-        );
+  //       const parentNode = node.getParent();
+  //       const nextLeafNode = traverseDownToLastChildNodeofType(
+  //         parentNode,
+  //         "subsectionList"
+  //       );
 
-        // remove existing node
-        node.remove();
+  //       // remove existing node
+  //       node.remove();
 
-        // create the new node
-        const sectionHeadingItem = $createSubsectionListItemNode();
-        const sectionHeadingItemTextNode = $createTextNode();
-        sectionHeadingItem.append(sectionHeadingItemTextNode);
+  //       // create the new node
+  //       const sectionHeadingItem = $createSubsectionListItemNode();
+  //       const sectionHeadingItemTextNode = $createTextNode();
+  //       sectionHeadingItem.append(sectionHeadingItemTextNode);
 
-        // Insert the new node after the last child node of the parent
-        if (nextLeafNode) {
-          nextLeafNode.append(sectionHeadingItem);
-        }
+  //       // Insert the new node after the last child node of the parent
+  //       if (nextLeafNode) {
+  //         nextLeafNode.append(sectionHeadingItem);
+  //       }
 
-        // set the selection (cursor)
-        const someKey = sectionHeadingItemTextNode.getKey();
-        const nodeSelection = $createNodeSelection();
-        nodeSelection.add(someKey);
-        $setSelection(nodeSelection);
+  //       // set the selection (cursor)
+  //       const someKey = sectionHeadingItemTextNode.getKey();
+  //       const nodeSelection = $createNodeSelection();
+  //       nodeSelection.add(someKey);
+  //       $setSelection(nodeSelection);
 
-        event.preventDefault();
+  //       event.preventDefault();
 
-        return true;
-      }
-      return false;
-    },
-    COMMAND_PRIORITY_LOW
-  );
+  //       return true;
+  //     }
+  //     return false;
+  //   },
+  //   COMMAND_PRIORITY_LOW
+  // );
 
   return null;
 }
